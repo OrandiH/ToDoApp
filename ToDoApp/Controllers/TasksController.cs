@@ -41,6 +41,27 @@ namespace ToDoApp.Controllers
             return View();
         }
 
+        // POST: Tasks/MarkDone/5
+        [HttpPost]
+        public ActionResult MarkDone(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Task task = db.Tasks.Find(id);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+
+            task.TaskDone = true;
+            db.Entry(task).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         // POST: Tasks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

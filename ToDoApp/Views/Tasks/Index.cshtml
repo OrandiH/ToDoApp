@@ -10,10 +10,25 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+<ul>
 @foreach (var item in Model)
 {
     <li>
-        @Html.DisplayFor(modelItem => item.TaskDone)
+        @*Html.DisplayFor(modelItem => item.TaskDone)*@
+
+        <form method="post" action="@Url.Action("MarkDone", new { id = item.TaskID })">
+            <button>
+                @if (item.TaskDone)
+                {
+                    <span class="glyphicon glyphicon-check"></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-unchecked"></span>
+                }
+            </button>
+        </form>
+
         @Html.ActionLink(Html.DisplayFor(modelItem => item.TaskName).ToString(),
                                          "Edit", new { id = item.TaskID })
         @*Html.DisplayFor(modelItem => item.TaskName)*@
@@ -25,5 +40,6 @@
             <span class="glyphicon glyphicon-remove"><span class="text-hide">Delete</span></span>
         </a>
         
-</li>
+    </li>
 }
+</ul>
