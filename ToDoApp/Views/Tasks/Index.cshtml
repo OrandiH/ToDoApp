@@ -10,14 +10,20 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
+    <li>
+        @Html.DisplayFor(modelItem => item.TaskDone)
+        @Html.ActionLink(Html.DisplayFor(modelItem => item.TaskName).ToString(),
+                                         "Edit", new { id = item.TaskID })
+        @*Html.DisplayFor(modelItem => item.TaskName)*@
+        @Html.DisplayFor(modelItem => item.DueDate)
 
-    @Html.DisplayFor(modelItem => item.DueDate)
-    @Html.DisplayFor(modelItem => item.TaskName)
-    @Html.DisplayFor(modelItem => item.TaskDone)
-    @item.TaskDone
+        @*Html.ActionLink("Delete", "Delete", new { id = item.TaskID })*@
 
-    @Html.ActionLink("Edit", "Edit", new { id = item.TaskID }) @:|
-    @Html.ActionLink("Details", "Details", new { id=item.TaskID }) @:|
-    @Html.ActionLink("Delete", "Delete", new { id=item.TaskID })
+        <a href="@Url.Action("Delete", new { id = item.TaskID })" class="btn btn-xs btn-danger">
+            <span class="glyphicon glyphicon-remove"><span class="text-hide">Delete</span></span>
+        </a>
+        
+</li>
 }
