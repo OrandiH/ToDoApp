@@ -44,7 +44,7 @@ namespace ToDoApp.Controllers
 
         // POST: Tasks/SetDone/5
         [HttpPost]
-        public ActionResult SetDone(int? id)
+        public ActionResult SetDone(int? id, bool TaskDone)
         {
             if (id == null)
             {
@@ -59,14 +59,7 @@ namespace ToDoApp.Controllers
             }
 
             // we got an id, and it maps to an actual task object!
-            if (Request["TaskDone"] == "True")
-            {
-                task.TaskDone = true;
-            }
-            else
-            {
-                task.TaskDone = false;
-            }
+            task.TaskDone = TaskDone;
             db.SaveChanges();
             return RedirectToAction("Index");
 
