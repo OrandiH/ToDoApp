@@ -41,6 +41,35 @@ namespace ToDoApp.Controllers
             return View();
         }
 
+        // POST: Tasks/MarkUndone/5
+        public ActionResult MarkUndone(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var task = db.Tasks.Find(id);
+
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+
+            // we got an id, and it maps to an actual task object!
+            task.TaskDone = false;
+            db.SaveChanges();
+
+            // redirect to the index
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
+
         // POST: Tasks/MarkDone/5
         [HttpPost]
         public ActionResult MarkDone(int? id)
@@ -56,7 +85,6 @@ namespace ToDoApp.Controllers
             }
 
             task.TaskDone = true;
-            db.Entry(task).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("Index");

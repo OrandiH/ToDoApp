@@ -15,8 +15,16 @@
 {
     <li>
         @*Html.DisplayFor(modelItem => item.TaskDone)*@
-
-        <form method="post" action="@Url.Action("MarkDone", new { id = item.TaskID })">
+        <form method="post" action="@{
+            if (item.TaskDone == true)
+            {
+                @Url.Action("MarkUndone", new { id = item.TaskID });
+            }
+            else
+            {
+                @Url.Action("MarkDone", new { id = item.TaskID });
+            }
+            }">
             <button>
                 @if (item.TaskDone)
                 {
