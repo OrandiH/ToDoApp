@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Index</h2>
 
 <p>
@@ -32,7 +33,29 @@
         @Html.ActionLink(Html.DisplayFor(modelItem => item.TaskName).ToString(),
                                          "Edit", new { id = item.TaskID })
         @*Html.DisplayFor(modelItem => item.TaskName)*@
-        @Html.DisplayFor(modelItem => item.DueDate)
+        @*Html.DisplayFor(modelItem => item.DueDate)*@
+        @{ 
+            if (item.DueDate != null)
+            {
+                var dueDate = (DateTime)item.DueDate;
+                if (dueDate.Date == DateTime.Today)
+                {
+                    @:Today
+                }
+                else if (dueDate.Date == DateTime.Today.AddDays(1))
+                {
+                    @:Tomorrow
+                }
+                else if (dueDate.Date < DateTime.Today.AddDays(7))
+                {
+                    @dueDate.DayOfWeek
+                }
+                else
+                {
+                    @dueDate.ToString("ddd, M/d")
+                }
+            }
+        }
 
         @*Html.ActionLink("Delete", "Delete", new { id = item.TaskID })*@
 
