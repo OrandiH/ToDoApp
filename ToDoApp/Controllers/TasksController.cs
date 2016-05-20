@@ -41,8 +41,10 @@ namespace ToDoApp.Controllers
             return View();
         }
 
-        // POST: Tasks/MarkUndone/5
-        public ActionResult MarkUndone(int? id)
+
+        // POST: Tasks/SetDone/5
+        [HttpPost]
+        public ActionResult SetDone(int? id)
         {
             if (id == null)
             {
@@ -57,38 +59,20 @@ namespace ToDoApp.Controllers
             }
 
             // we got an id, and it maps to an actual task object!
-            task.TaskDone = false;
+            if (Request["TaskDone"] == "True")
+            {
+                task.TaskDone = true;
+            }
+            else
+            {
+                task.TaskDone = false;
+            }
             db.SaveChanges();
-
-            // redirect to the index
             return RedirectToAction("Index");
+
         }
 
 
-
-
-
-
-
-        // POST: Tasks/MarkDone/5
-        [HttpPost]
-        public ActionResult MarkDone(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Task task = db.Tasks.Find(id);
-            if (task == null)
-            {
-                return HttpNotFound();
-            }
-
-            task.TaskDone = true;
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
 
         // POST: Tasks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

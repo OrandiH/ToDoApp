@@ -15,16 +15,7 @@
 {
     <li>
         @*Html.DisplayFor(modelItem => item.TaskDone)*@
-        <form method="post" action="@{
-            if (item.TaskDone == true)
-            {
-                @Url.Action("MarkUndone", new { id = item.TaskID });
-            }
-            else
-            {
-                @Url.Action("MarkDone", new { id = item.TaskID });
-            }
-            }">
+        <form method="post" action="@Url.Action("SetDone", new { id = item.TaskID })">
             <button>
                 @if (item.TaskDone)
                 {
@@ -35,6 +26,7 @@
                     <span class="glyphicon glyphicon-unchecked"></span>
                 }
             </button>
+            @Html.Hidden("TaskDone", !item.TaskDone)
         </form>
 
         @Html.ActionLink(Html.DisplayFor(modelItem => item.TaskName).ToString(),
