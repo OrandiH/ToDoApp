@@ -61,7 +61,19 @@ namespace ToDoApp.Controllers
             // we got an id, and it maps to an actual task object!
             task.TaskDone = TaskDone;
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+
+            // figure out if it's an ajax request or not
+            // redirect if it isn't
+            // just say "OK" if it is
+            if (Request.AcceptTypes.Contains("application/json"))
+            {
+                return Json(new { Status = "OK" });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
 
         }
 

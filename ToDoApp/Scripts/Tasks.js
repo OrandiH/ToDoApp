@@ -5,6 +5,7 @@ $(document).ready(function () {
         console.log(event);
         var form = event.currentTarget.form;
         var taskDoneNode = form.TaskDone;
+
         console.log(taskDoneNode.value);
         console.log(form.action);
         $.ajax({
@@ -12,8 +13,9 @@ $(document).ready(function () {
             data: {
                 TaskDone: taskDoneNode.value
             },
+            dataType: 'json',
             method: 'POST',
-            success: function () {
+            success: function (result, status, jqXHR) {
                 if (taskDoneNode.value == "True") {
                     $(event.currentTarget).find('.glyphicon').addClass('glyphicon-check').removeClass('glyphicon-unchecked');
                     taskDoneNode.value = 'False';
